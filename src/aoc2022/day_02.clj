@@ -48,7 +48,7 @@
               [:scissors :draw] :scissors
               [:scissors :win] :rock})
 
-(defn part-2-lookup [[opponent result]]
+(defn part-2-transform [[opponent result]]
   [(play-lookup opponent)
    (my-play [(play-lookup opponent) (outcome result)])])
 
@@ -57,7 +57,7 @@
    "src/aoc2022/day_02.txt"
    file->lines
    (map (fn [s] (str/split s #" ")))
-   (map part-2-lookup)
+   (map part-2-transform)
    (map round-scores)
    (map (fn [round-scores] (reduce + round-scores)))
    (reduce +)))

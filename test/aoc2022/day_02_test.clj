@@ -1,4 +1,4 @@
-(ns aoc2022.day-02.test
+(ns aoc2022.day-02-test
   (:require  [clojure.test :as t]
              [aoc2022.day-02 :as sut]))
 

@@ -21,7 +21,6 @@
                     [:scissors :paper] 0
                     [:scissors :rock] 6})
 
-
 (defn round-scores [[opponent me]]
   [(score-lookup me) (winning-score [opponent me])])
 
@@ -51,26 +50,23 @@
 
 (defn part-2-lookup [[opponent result]]
   [(play-lookup opponent)
-   (my-play [(play-lookup opponent) (outcome result)])]
-  )
+   (my-play [(play-lookup opponent) (outcome result)])])
 
 (defn part-2 []
   (->>
-    "src/aoc2022/day_02.txt"
-    file->lines
-    (map (fn [s] (str/split s #" ")))
-    (map part-2-lookup)
-    (map round-scores)
-    (map (fn [round-scores] (reduce + round-scores)))
-    (reduce +)))
+   "src/aoc2022/day_02.txt"
+   file->lines
+   (map (fn [s] (str/split s #" ")))
+   (map part-2-lookup)
+   (map round-scores)
+   (map (fn [round-scores] (reduce + round-scores)))
+   (reduce +)))
 
 (comment
 
   (part-1)
   ;; => 11841
 
-
   (part-2)
   ;; => 13022
-
   )

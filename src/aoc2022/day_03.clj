@@ -4,9 +4,7 @@
             [clojure.set :as set]))
 
 (defn compartments [s]
-  (let [length (count s)]
-    [(take (/ length 2) s)
-     (take-last (/ length 2) s)]))
+  (partition (/ (count s) 2) s))
 
 (defn find-common-items [cols]
   (comment

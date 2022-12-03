@@ -4,8 +4,8 @@
 
 (defn compartments [s]
   (let [length (count s)]
-    [(map identity (take (/ length 2) s))
-     (map identity (take-last (/ length 2) s))]))
+    [(take (/ length 2) s)
+     (take-last (/ length 2) s)]))
 
 (defn misplaced [[c1 c2]] (first (filter (set c1) c2)))
 

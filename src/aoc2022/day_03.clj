@@ -14,23 +14,39 @@
 
 (def priority-map
   (into {}
-    (map vector
-      (concat (char-range \a 26) (char-range \A 26))
-      (map inc (range)))))
+        (map vector
+             (concat (char-range \a 26) (char-range \A 26))
+             (map inc (range)))))
 
 (defn part-1 []
   (->> "src/aoc2022/day_03.txt"
-    file->lines
-    (map compartments)
-    (map misplaced)
-    (map priority-map)
-    (reduce + 0)))
+       file->lines
+       (map compartments)
+       (map misplaced)
+       (map priority-map)
+       (reduce + 0)))
+
+(defn teams [sacks]
+  (partition 3 sacks))
+
+(defn part-2 []
+  (->> "src/aoc2022/day_03.txt"
+       file->lines
+       teams
+       (map
+        (fn [team]
+          (first (reduce (fn [common sack] (filter (set common) sack)) team))))
+       (map priority-map)
+       (reduce + 0)))
 
 (comment
 
   (part-1)
   ;; => 7997
 
+  (part-2)
+  ;; => 2545
 
-  )
+
+  .)
 

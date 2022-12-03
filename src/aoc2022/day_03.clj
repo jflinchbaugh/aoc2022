@@ -9,6 +9,10 @@
      (take-last (/ length 2) s)]))
 
 (defn find-common-items [cols]
+  (comment
+    ;; I had initially rolled my own intersect function of which I was proud:
+    (set (reduce (fn [c1 c2] (filter (set c1) c2)) cols))
+    )
   (apply set/intersection (map set cols)))
 
 (defn misplaced [[c1 c2]] (first (find-common-items [c1 c2])))

@@ -50,8 +50,6 @@
 
 (comment
 
-  (apply set/intersection (map set [[1 2] [1 3]]))
-
   (part-1)
   ;; => 7997
 

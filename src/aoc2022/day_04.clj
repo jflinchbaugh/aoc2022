@@ -9,6 +9,8 @@
    (map parse-long)
    (partition 2)))
 
+;; fighting the urge to implement this with ranges.
+;; it would have almost been less thinking
 (defn inside?
   "either range is completely within the other"
   [[r1-start r1-end] [r2-start r2-end]]

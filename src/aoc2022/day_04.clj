@@ -9,7 +9,9 @@
    (map parse-long)
    (partition 2)))
 
-(defn inside? [[r1-start r1-end] [r2-start r2-end]]
+(defn inside?
+  "either range is completely within the other"
+  [[r1-start r1-end] [r2-start r2-end]]
   (or
     (and (<= r1-start r2-start) (>= r1-end r2-end))
     (and (>= r1-start r2-start) (<= r1-end r2-end))))
@@ -25,7 +27,9 @@
 (defn inclusive-range-set [start end]
   (set (range start (inc end))))
 
-(defn overlap? [[r1-start r1-end] [r2-start r2-end]]
+(defn overlap?
+  "there's any overlap between ranges"
+  [[r1-start r1-end] [r2-start r2-end]]
   (let [r1 (inclusive-range-set r1-start r1-end)
         r2 (inclusive-range-set r2-start r2-end)]
     (not (empty? (set/intersection r1 r2))))

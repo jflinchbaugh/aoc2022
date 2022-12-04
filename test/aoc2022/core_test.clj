@@ -6,7 +6,7 @@
   (testing "avg"
     (is (= 2 (avg [1 2 3])))
     (is (= 2 (avg [2])))
-    (is (= nil (avg [])))))
+    (is (nil? (avg [])))))
 
 (deftest test-file->lines
   (testing "file->lines"

@@ -1,6 +1,5 @@
 (ns aoc2022.day-03
   (:require [aoc2022.core :refer :all]
-            [clojure.string :as str]
             [clojure.set :as set]))
 
 (defn compartments [s]

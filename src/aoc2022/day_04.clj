@@ -34,8 +34,7 @@
   [[r1-start r1-end] [r2-start r2-end]]
   (let [r1 (inclusive-range-set r1-start r1-end)
         r2 (inclusive-range-set r2-start r2-end)]
-    (not (empty? (set/intersection r1 r2))))
-  )
+    (seq (set/intersection r1 r2))))
 
 (defn part-2 []
   (->>

@@ -38,6 +38,12 @@
 
 (def crate-mover-9000 (make-mover reverse))
 
+(defn tops [stacks]
+  (->>
+    stacks
+    (map last)
+    (str/join)))
+
 (defn part-1 []
   (let [lines (file->lines "src/aoc2022/day_05.txt")
         stacks (parse-stacks lines)
@@ -45,10 +51,7 @@
         final (->>
                 moves
                 (reduce crate-mover-9000 stacks))]
-    (->> final
-      (map last)
-      (map (fn [c] (if (nil? c) " " c)))
-      (str/join))))
+    (tops final)))
 
 (def crate-mover-9001 (make-mover identity))
 
@@ -59,10 +62,7 @@
         final (->>
                 moves
                 (reduce crate-mover-9001 stacks))]
-    (->> final
-      (map last)
-      (map (fn [c] (if (nil? c) " " c)))
-      (str/join))))
+    (tops final)))
 (comment
   (part-1)
   ;; => "MQTPGLLDN"

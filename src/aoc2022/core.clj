@@ -11,9 +11,7 @@
   "parse a string into trimmed lines"
   [str-data]
   (->> str-data
-    str/trim
-    str/split-lines
-    (map str/trim)))
+    str/split-lines))
 
 (defn file->lines
   "read a local named file and parse it into trimmed lines"

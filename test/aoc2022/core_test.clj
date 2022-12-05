@@ -10,7 +10,7 @@
 
 (deftest test-file->lines
   (testing "file->lines"
-    (is (= ["1" "2"] (file->lines "test/aoc2022/file.txt")))))
+    (is (= ["" "1" "2"] (file->lines "test/aoc2022/file.txt")))))
 
 (deftest test-all-range
   (are [expected actual] (= expected actual)

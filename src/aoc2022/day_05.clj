@@ -31,7 +31,6 @@
 (defn make-mover [ordering]
   (fn [stacks [cnt src dest]]
     (let [src-stack (nth stacks (dec src))
-          _ (assert (>= (count src-stack) cnt))
           src-stack-new (drop-last cnt src-stack)
           moving (ordering (take-last cnt src-stack))
           dest-stack (nth stacks (dec dest))

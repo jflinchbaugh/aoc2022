@@ -15,8 +15,8 @@
   "either range is completely within the other"
   [[r1-start r1-end] [r2-start r2-end]]
   (or
-    (and (<= r1-start r2-start) (>= r1-end r2-end))
-    (and (>= r1-start r2-start) (<= r1-end r2-end))))
+    (<= r1-start r2-start r2-end r1-end)
+    (<= r2-start r1-start r1-end r2-end)))
 
 (defn part-1 []
   (->>

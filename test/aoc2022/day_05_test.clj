@@ -2,14 +2,23 @@
   (:require [aoc2022.day-05 :as sut]
             [clojure.test :as t]))
 
-(t/deftest test-move-stacks
+(t/deftest test-crate-mover-9000
   (t/is (= [[\a \b \c]
             [\d \e]
-            []] (sut/move-stacks [[\a \b \c] [\d] [\e]] [1 3 2])))
+            []] (sut/crate-mover-9000 [[\a \b \c] [\d] [\e]] [1 3 2])))
 
   (t/is (= [[\a]
             [\d \c \b]
-            [\e]] (sut/move-stacks [[\a \b \c] [\d] [\e]] [2 1 2]))))
+            [\e]] (sut/crate-mover-9000 [[\a \b \c] [\d] [\e]] [2 1 2]))))
+
+(t/deftest test-crate-mover-9001
+  (t/is (= [[\a \b \c]
+            [\d \e]
+            []] (sut/crate-mover-9001 [[\a \b \c] [\d] [\e]] [1 3 2])))
+
+  (t/is (= [[\a]
+            [\d \b \c]
+            [\e]] (sut/crate-mover-9001 [[\a \b \c] [\d] [\e]] [2 1 2]))))
 
 (t/deftest test-parse-moves
   (t/is (= [[10 9 8]

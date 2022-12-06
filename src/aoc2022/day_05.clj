@@ -2,12 +2,14 @@
   (:require [aoc2022.core :refer :all]
             [clojure.string :as str]))
 
+(def line->crates (comp (partial take-nth 4) rest))
+
 (defn parse-stacks [lines]
   (->>
    lines
    (take-while (complement str/blank?))
    (drop-last)
-   (map (apply juxt (map (fn [x] (fn [s] (nth s (inc (* 4 x))))) (range 9))))
+   (map line->crates)
    (apply map vector)
    (map reverse)
    (map (partial remove #{\space}))))

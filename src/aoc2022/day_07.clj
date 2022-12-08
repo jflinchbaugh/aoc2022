@@ -79,10 +79,31 @@
       (map second)
       (reduce + 0))))
 
+(defn part-2 [input-name]
+  (let [tree (->>
+               input-name
+               file->lines
+               (reduce build-tree [[] []])
+               first)
+        dirs (find-dirs tree)
+        disk-in-use (map (partial disk-usage tree) dirs)
+        total-disk-in-use (->> disk-in-use (map second) (sort >) first)
+        disk-free (- 70000000 total-disk-in-use)
+        disk-needed (- 30000000 disk-free)]
+    (->>
+      disk-in-use
+      (filter (fn [[_ size]] (>= size disk-needed)))
+      (map second)
+      (sort <)
+      first
+      )))
+
 (comment
   (part-1 "src/aoc2022/day_07.txt")
   ;; => 1447046
 
+  (part-2 "src/aoc2022/day_07.txt")
+  ;; => 578710
 
 ;;
   )

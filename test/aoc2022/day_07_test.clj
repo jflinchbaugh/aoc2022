@@ -45,4 +45,5 @@
              ["d" "e" 5]]))))
 
 (t/deftest test-answers
-  (t/is (= 1447046 (sut/part-1 "src/aoc2022/day_07.txt"))))
+  (t/is (= 1447046 (sut/part-1 "src/aoc2022/day_07.txt")))
+  (t/is (= 578710 (sut/part-2 "src/aoc2022/day_07.txt"))))

@@ -12,67 +12,62 @@
 
 (defn move-1 [[[cx cy] & path] dir]
   (cons
-    (case dir
-      :up [cx (dec cy)]
-      :down [cx (inc cy)]
-      :left [(dec cx) cy]
-      :right [(inc cx) cy]
-      [cx cy])
-    (cons [cx cy] path)))
+   (case dir
+     :up [cx (dec cy)]
+     :down [cx (inc cy)]
+     :left [(dec cx) cy]
+     :right [(inc cx) cy]
+     [cx cy])
+   (cons [cx cy] path)))
 
 (defn follow-1 [[[tx ty] & tail-path] [hx hy]]
   (cons
-    (let [dx (- hx tx)
-          dy (- hy ty)]
-      (if (and (>= 1 (abs dx)) (>= 1 (abs dy)))
-        [tx ty]
+   (let [dx (- hx tx)
+         dy (- hy ty)]
+     (if (and (>= 1 (abs dx)) (>= 1 (abs dy)))
+       [tx ty]
 
-        [(cond (pos? dx) (inc tx) (neg? dx) (dec tx) :else tx)
-         (cond (pos? dy) (inc ty) (neg? dy) (dec ty) :else ty)]
-        )
-      )
-    (cons [tx ty] tail-path)))
+       [(cond (pos? dx) (inc tx) (neg? dx) (dec tx) :else tx)
+        (cond (pos? dy) (inc ty) (neg? dy) (dec ty) :else ty)]))
+
+   (cons [tx ty] tail-path)))
 
 (defn part-1 []
   (->>
-    "src/aoc2022/day_09.txt"
-    file->lines
-    (map parse-line)
-    (mapcat expand)
-    (reduce move-1 [[0 0]])
-    reverse
-    (reduce follow-1 [[0 0]])
-    set
-    count))
+   "src/aoc2022/day_09.txt"
+   file->lines
+   (map parse-line)
+   (mapcat expand)
+   (reduce move-1 [[0 0]])
+   reverse
+   (reduce follow-1 [[0 0]])
+   set
+   count))
 
+(defn follow [moves]
+  (->>
+   moves
+   reverse
+   (reduce follow-1 [[0 0]])))
 
 (defn part-2 []
   (->>
-    "src/aoc2022/day_09.txt"
-    file->lines
-    (map parse-line)
-    (mapcat expand)
-    (reduce move-1 [[0 0]])
-    reverse
-    (reduce follow-1 [[0 0]])
-    reverse
-    (reduce follow-1 [[0 0]])
-    reverse
-    (reduce follow-1 [[0 0]])
-    reverse
-    (reduce follow-1 [[0 0]])
-    reverse
-    (reduce follow-1 [[0 0]])
-    reverse
-    (reduce follow-1 [[0 0]])
-    reverse
-    (reduce follow-1 [[0 0]])
-    reverse
-    (reduce follow-1 [[0 0]])
-    reverse
-    (reduce follow-1 [[0 0]])
-    set
-    count))
+   "src/aoc2022/day_09.txt"
+   file->lines
+   (map parse-line)
+   (mapcat expand)
+   (reduce move-1 [[0 0]])
+   follow
+   follow
+   follow
+   follow
+   follow
+   follow
+   follow
+   follow
+   follow
+   set
+   count))
 
 (comment
 

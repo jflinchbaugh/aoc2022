@@ -45,10 +45,41 @@
     set
     count))
 
+
+(defn part-2 []
+  (->>
+    "src/aoc2022/day_09.txt"
+    file->lines
+    (map parse-line)
+    (mapcat expand)
+    (reduce move-1 [[0 0]])
+    reverse
+    (reduce follow-1 [[0 0]])
+    reverse
+    (reduce follow-1 [[0 0]])
+    reverse
+    (reduce follow-1 [[0 0]])
+    reverse
+    (reduce follow-1 [[0 0]])
+    reverse
+    (reduce follow-1 [[0 0]])
+    reverse
+    (reduce follow-1 [[0 0]])
+    reverse
+    (reduce follow-1 [[0 0]])
+    reverse
+    (reduce follow-1 [[0 0]])
+    reverse
+    (reduce follow-1 [[0 0]])
+    set
+    count))
+
 (comment
 
   (part-1)
   ;; => 6464
 
+  (part-2)
+  ;; => 2604
 
   nil)

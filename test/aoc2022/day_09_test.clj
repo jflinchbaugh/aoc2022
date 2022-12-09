@@ -61,4 +61,5 @@
   )
 
 (t/deftest sample-head
-  (t/is (= 6464 (sut/part-1))))
+  (t/is (= 6464 (sut/part-1)))
+  (t/is (= 2604 (sut/part-2))))

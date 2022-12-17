@@ -1,5 +1,6 @@
 (ns aoc2022.day-15
-  (:require [aoc2022.core :refer :all]))
+  (:require [aoc2022.core :refer :all]
+            [clojure.set :as set]))
 
 (defn parse-line [line]
   (->> line
@@ -24,14 +25,13 @@
                        (fn [[sx sy d]]
                          (>= d (manhattan-dist [sx sy] [sx 2E6])))))
         beacons-in-row (->>
-                         entries
-                         (map
-                           (fn [[sx sy bx by]]
-                             [bx by]))
-                         (filter
-                           (fn [[bx by]]
-                             (= by (long 2E6)))))
-        ]
+                        entries
+                        (map
+                         (fn [[sx sy bx by]]
+                           [bx by]))
+                        (filter
+                         (fn [[bx by]]
+                           (= by (long 2E6)))))]
     (->>
      near-sensors
      (mapcat
@@ -43,10 +43,48 @@
      set
      count)))
 
+(defn corners [[x y d]]
+  [[(- x d) y] [x (- y d)] [(+ x d) y] [x (+ y d)]])
+
+(defn adjacent-points [[x y]]
+  (for [dx (range -2 3)
+        dy (range -2 3)]
+    [(+ x dx) (+ y dy)]))
+
+(defn seen-by-sensor? [[sx sy d] [bx by]]
+  (>= d (manhattan-dist [sx sy] [bx by])))
+
+(defn seen-by-any-sensor? [sensors beacon]
+  (some (fn [sensor] (seen-by-sensor? sensor beacon)) sensors))
+
+(defn part-2 []
+  (let [entries (->>
+                 "src/aoc2022/day_15.txt"
+                 file->lines
+                 (map parse-line))
+        sensors (->>
+                 entries
+                 (map
+                  (fn [[sx sy bx by]]
+                    [sx sy (inc (manhattan-dist [sx sy] [bx by]))])))
+        ]
+    (->>
+      sensors
+      (mapcat corners)
+      (concat [[0 0] [0 (long 4E6)] [(long 4E6) 0] [(long 4E6) (long 4E6)]])
+      (mapcat adjacent-points)
+      (filter
+        (fn [[fx fy]]
+          (and (<= fx (long 4E6)) (<= fy (long 4E6)) (<= 0 fx) (<= 0 fy))))
+      (remove (partial seen-by-any-sensor? sensors))
+      ))
+
+
+  )
+
 (comment
 
   (part-1)
   ;; => 4879972
-  ;; => 4879970 lo
 
   nil)

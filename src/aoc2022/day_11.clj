@@ -42,17 +42,23 @@
     :op (partial + 7)
     :to-monkey (fn [x] (if (zero? (mod x 17)) 3 1))}])
 
-(defn inspect [op item]
-  (long (/ (op item) 3)))
+;; all the divisors above for the to-monkey test
+(def denom (* 2 3 5 7 11 13 17 19))
 
-(defn route-item [{:keys [op to-monkey]} item]
-  (let [new (inspect op item)
+(defn control-stress [relief stress]
+  (rem (long (/ stress relief)) denom))
+
+(defn inspect [relief op item]
+  (control-stress relief (op item)))
+
+(defn route-item [relief {:keys [op to-monkey]} item]
+  (let [new (inspect relief op item)
         monkey (to-monkey new)]
     [monkey new]))
 
-(defn monkey-moves [{:keys [items] :as monkey}]
+(defn monkey-moves [relief {:keys [items] :as monkey}]
   (->> items
-       (map (partial route-item monkey))
+       (map (partial route-item relief monkey))
        (group-by first)
        (map (fn [[k v]] [k (map second v)]))))
 
@@ -62,13 +68,13 @@
      (update-in new-monkeys [num :items] concat items))
    monkeys moves))
 
-(defn run-round [monkeys]
+(defn run-round [relief monkeys]
   (loop [monkeys' monkeys
          monkey-number 0]
     (if (>= monkey-number (count monkeys'))
       monkeys'
       (let [monkey (get monkeys' monkey-number)
-            moves (monkey-moves monkey)]
+            moves (monkey-moves relief monkey)]
         (recur
          (-> monkeys'
              (apply-move monkey-number moves)
@@ -79,8 +85,18 @@
 
 (defn part-1 []
   (->> monkeys
-    (iterate run-round)
+    (iterate (partial run-round 3))
     (take (inc 20))
+    last
+    (map :inspections)
+    (sort >)
+    (take 2)
+    (reduce * 1)))
+
+(defn part-2 []
+  (->> monkeys
+    (iterate (partial run-round 1))
+    (take (inc 10000))
     last
     (map :inspections)
     (sort >)
@@ -91,5 +107,9 @@
 
   (part-1)
   ;; => 76728
+
+  (part-2)
+  ;; => 21553910156
+
 
   nil)

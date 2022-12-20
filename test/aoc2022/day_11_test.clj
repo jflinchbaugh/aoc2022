@@ -3,15 +3,16 @@
             [clojure.test :as t]))
 
 (t/deftest test-inspect
-  (t/is (= 500 (sut/inspect (partial * 19) 79)))
-  (t/is (= 20 (sut/inspect (partial + 6) 54)))
+  (t/is (= 500 (sut/inspect 3 (partial * 19) 79)))
+  (t/is (= 20 (sut/inspect 3 (partial + 6) 54)))
   )
 
 
 (t/deftest test-route-item
-  (t/is (= [7 165] (sut/route-item (first sut/monkeys) 45)
+  (t/is (= [7 165] (sut/route-item 3 (first sut/monkeys) 45)
 
           )))
 
-#_(t/deftest test-answers
-  (t/is (= 14220 (sut/part-1))))
+(t/deftest test-answers
+  (t/is (= 76728 (sut/part-1)))
+  (t/is (= 21553910156 (sut/part-2))))

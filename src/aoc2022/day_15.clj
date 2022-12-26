@@ -1,7 +1,6 @@
 (ns aoc2022.day-15
-  (:require [aoc2022.core :refer :all]
+  (:require [aoc2022.core :refer [file->lines]]
             [clojure.set :as set]
-            [clojure.core.logic :as l]
             [clojure.math.combinatorics :as combo]))
 
 (defn parse-line [line]
@@ -29,10 +28,10 @@
         beacons-in-row (->>
                         entries
                         (map
-                         (fn [[sx sy bx by]]
+                         (fn [[_ _ bx by]]
                            [bx by]))
                         (filter
-                         (fn [[bx by]]
+                         (fn [[_ by]]
                            (= by (long 2E6)))))]
     (->>
      near-sensors

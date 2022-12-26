@@ -42,10 +42,22 @@
     (map (fn [i v] (if (ordered? v) (inc i) 0)) (range))
     (reduce + 0)))
 
+(defn part-2 []
+  (->>
+    input
+    (cons [[2]])
+    (cons [[6]])
+    (sort compare-message)
+    (map (fn [i v] (if (#{[[2]] [[6]]} v) (inc i) 1)) (range))
+    (reduce * 1)))
+
 (comment
 
  (part-1)
  ;; => 5825
+
+ (part-2)
+ ;; => 24477
 
 
   nil)

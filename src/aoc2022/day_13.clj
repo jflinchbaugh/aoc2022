@@ -7,10 +7,10 @@
     (and (nil? m1) (nil? m2))
     0
 
-    (and (nil? m1))
+    (nil? m1)
     -1
 
-    (and (nil? m2))
+    (nil? m2)
     1
 
     (and (number? m1) (number? m2))

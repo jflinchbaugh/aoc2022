@@ -1,6 +1,5 @@
 (ns aoc2022.day-12
-  (:require [aoc2022.core :refer :all]
-            [clojure.string :as str]))
+  (:require [aoc2022.core :refer [dijkstra file->lines]]))
 
 (def letter->val
   (zipmap
@@ -90,7 +89,6 @@
   (let [source-grid (->> "src/aoc2022/day_12.txt"
                       file->lines
                       lines->grid)
-        start (terminal source-grid \S 0)
         end (terminal source-grid \E 25)
         number-grid (map
                       (fn [[r c letter]] [r c (letter->val letter)])
@@ -98,7 +96,7 @@
         graph (build-graph-down number-grid)]
     (->>
       (dijkstra graph end)
-      (filter (fn [[[r c e] cost]] (zero? e)))
+      (filter (fn [[[_ _ e]]] (zero? e)))
       (sort-by second)
       first
       second)))

@@ -69,7 +69,9 @@
                     [sx sy (inc (manhattan-dist [sx sy] [bx by]))])))]
     (->>
      (combo/combinations sensors 2)
+     ;; find sensors that have a line of space between them
      (filter neighbors?)
+     ;; map each neighbor sensor into an outline
      (mapcat (fn [[s1 s2]] [(set (outline s1)) (set (outline s2))]))
      (apply set/intersection)
      first

@@ -1,6 +1,8 @@
 (ns aoc2022.day-15
   (:require [aoc2022.core :refer :all]
-            [clojure.set :as set]))
+            [clojure.set :as set]
+            [clojure.core.logic :as l]
+            [clojure.math.combinatorics :as combo]))
 
 (defn parse-line [line]
   (->> line
@@ -43,19 +45,17 @@
      set
      count)))
 
-(defn corners [[x y d]]
-  [[(- x d) y] [x (- y d)] [(+ x d) y] [x (+ y d)]])
+(defn outline [[x y d]]
+  (mapcat (fn [i] (set [[(+ x i) (+ y (- d i))]
+                        [(- x i) (+ y (- d i))]
+                        [(+ x i) (- y (- d i))]
+                        [(- x i) (- y (- d i))]])) (range (inc d))))
 
-(defn adjacent-points [[x y]]
-  (for [dx (range -2 3)
-        dy (range -2 3)]
-    [(+ x dx) (+ y dy)]))
+(defn tuning-frequency [[x y]]
+  (+ (* (long 4E6) x) y))
 
-(defn seen-by-sensor? [[sx sy d] [bx by]]
-  (>= d (manhattan-dist [sx sy] [bx by])))
-
-(defn seen-by-any-sensor? [sensors beacon]
-  (some (fn [sensor] (seen-by-sensor? sensor beacon)) sensors))
+(defn neighbors? [[s1 s2]]
+  (= 1 (- (+ 1 (nth s1 2) (nth s2 2)) (manhattan-dist s1 s2))))
 
 (defn part-2 []
   (let [entries (->>
@@ -66,25 +66,21 @@
                  entries
                  (map
                   (fn [[sx sy bx by]]
-                    [sx sy (inc (manhattan-dist [sx sy] [bx by]))])))
-        ]
+                    [sx sy (inc (manhattan-dist [sx sy] [bx by]))])))]
     (->>
-      sensors
-      (mapcat corners)
-      (concat [[0 0] [0 (long 4E6)] [(long 4E6) 0] [(long 4E6) (long 4E6)]])
-      (mapcat adjacent-points)
-      (filter
-        (fn [[fx fy]]
-          (and (<= fx (long 4E6)) (<= fy (long 4E6)) (<= 0 fx) (<= 0 fy))))
-      (remove (partial seen-by-any-sensor? sensors))
-      ))
-
-
-  )
+     (combo/combinations sensors 2)
+     (filter neighbors?)
+     (mapcat (fn [[s1 s2]] [(set (outline s1)) (set (outline s2))]))
+     (apply set/intersection)
+     first
+     tuning-frequency)))
 
 (comment
 
   (part-1)
   ;; => 4879972
+
+  (part-2)
+  ;; => 12525726647448
 
   nil)

@@ -1,5 +1,5 @@
 (ns aoc2022.day-08
-  (:require [aoc2022.core :refer :all]))
+  (:require [aoc2022.core :refer [file->lines]]))
 
 (defn lines->matrix [lines]
   (mapv

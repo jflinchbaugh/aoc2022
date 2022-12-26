@@ -1,5 +1,5 @@
 (ns aoc2022.day-03
-  (:require [aoc2022.core :refer :all]
+  (:require [aoc2022.core :refer [file->lines]]
             [clojure.set :as set]))
 
 (defn compartments [s]
@@ -56,5 +56,5 @@
   ;; => 2545
 
 
-  .)
+  nil)
 

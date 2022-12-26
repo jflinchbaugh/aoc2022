@@ -1,5 +1,4 @@
-(ns aoc2022.day-06
-  (:require [aoc2022.core :refer :all]))
+(ns aoc2022.day-06)
 
 (defn marker? [length col]
   (= length (count (set col))))

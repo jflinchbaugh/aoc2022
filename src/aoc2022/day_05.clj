@@ -1,5 +1,5 @@
 (ns aoc2022.day-05
-  (:require [aoc2022.core :refer :all]
+  (:require [aoc2022.core :refer [file->lines]]
             [clojure.string :as str]))
 
 (def line->crates (comp (partial take-nth 4) rest))

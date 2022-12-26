@@ -1,22 +1,9 @@
 (ns aoc2022.day-07
-  (:require [aoc2022.core :refer :all]
+  (:require [aoc2022.core :refer [file->lines]]
             [clojure.string :as str]))
 
 (def pushd cons)
 (def popd rest)
-
-(comment
-  (defn add-dir [tree parts cwd]
-    (assoc-in
-     tree
-     (reverse (pushd (second parts) cwd))
-     {}))
-
-  (defn add-file [tree parts cwd]
-    (assoc-in
-     tree
-     (reverse (pushd (second parts) cwd))
-     (parse-long (first parts)))))
 
 (defn add-file [tree [size file] cwd]
   (cons (vec (reverse (pushd (parse-long size) (pushd file cwd)))) tree))

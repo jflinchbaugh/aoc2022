@@ -1,5 +1,4 @@
-(ns aoc2022.day-11
-  (:require [aoc2022.core :refer :all]))
+(ns aoc2022.day-11)
 
 (def monkeys
   [{:items [61]
@@ -62,7 +61,7 @@
        (group-by first)
        (map (fn [[k v]] [k (map second v)]))))
 
-(defn apply-move [monkeys num moves]
+(defn apply-move [monkeys moves]
   (reduce
    (fn [new-monkeys [num items]]
      (update-in new-monkeys [num :items] concat items))
@@ -77,7 +76,7 @@
             moves (monkey-moves relief monkey)]
         (recur
          (-> monkeys'
-             (apply-move monkey-number moves)
+             (apply-move moves)
              (update-in [monkey-number :inspections] + (count (monkey :items)))
              (assoc-in [monkey-number :items] [])
              )
